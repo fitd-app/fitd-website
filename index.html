@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fitd — Wear it. Tag it. Earn from it.</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --gold:#B8892A;
+  --gold-bright:#C9A84C;
+  --gold-light:rgba(201,168,76,0.15);
+  --gold-pale:#FBF6EC;
+  --gold-border:rgba(201,168,76,0.25);
+  --black:#0A0A0A;
+  --dark:#1A1A1A;
+  --text:#2C2C2C;
+  --text2:#555;
+  --muted:#888;
+  --border:#E8E2D8;
+  --border2:#D4CCC0;
+  --white:#FFFFFF;
+  --cream:#FDFAF5;
+  --cream2:#F7F2EA;
+  --section-alt:#F4EFE6;
+}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;color:var(--text);background:var(--white);overflow-x:hidden;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(253,250,245,0.94);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);transition:box-shadow 0.3s;}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:27px;font-weight:700;letter-spacing:-0.5px;color:var(--dark);}
+.nav-logo span{color:var(--gold);}
+.nav-logo em{font-style:italic;}
+.nav-links{display:flex;align-items:center;gap:28px;}
+.nav-links a{font-size:13px;color:var(--muted);text-decoration:none;transition:color 0.2s;font-weight:400;}
+.nav-links a:hover{color:var(--text);}
+.nav-cta{background:var(--black);color:white;padding:9px 22px;border-radius:100px;font-size:13px;font-weight:600;text-decoration:none;transition:all 0.2s;border:none;cursor:pointer;letter-spacing:0.01em;}
+.nav-cta:hover{background:var(--gold);color:white;transform:translateY(-1px);}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:120px 24px 80px;background:var(--cream);position:relative;overflow:hidden;text-align:center;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 65% 50% at 50% 0%,rgba(201,168,76,0.09) 0%,transparent 60%),radial-gradient(ellipse 35% 35% at 85% 85%,rgba(201,168,76,0.05) 0%,transparent 60%);}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:var(--gold-light);color:var(--gold);font-size:11px;font-weight:600;padding:6px 14px;border-radius:100px;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:32px;border:1px solid var(--gold-border);animation:fadeUp 0.8s ease both;}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(56px,9vw,100px);font-weight:300;line-height:1.0;letter-spacing:-3px;margin-bottom:24px;animation:fadeUp 0.8s 0.1s ease both;opacity:0;color:var(--dark);}
+.hero-title strong{font-weight:700;color:var(--black);}
+.hero-title em{font-style:italic;color:var(--gold);}
+.hero-sub{font-size:clamp(15px,1.8vw,18px);color:var(--muted);line-height:1.7;max-width:520px;margin:0 auto 44px;font-weight:300;animation:fadeUp 0.8s 0.2s ease both;opacity:0;}
+.hero-form{display:flex;gap:10px;max-width:460px;margin:0 auto 16px;animation:fadeUp 0.8s 0.3s ease both;opacity:0;flex-wrap:wrap;justify-content:center;}
+.hero-input{flex:1;min-width:220px;padding:14px 20px;border:1.5px solid var(--border2);border-radius:100px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.2s;background:white;color:var(--text);}
+.hero-input::placeholder{color:var(--muted);}
+.hero-input:focus{border-color:var(--gold);}
+.hero-btn{background:var(--black);color:white;padding:14px 28px;border-radius:100px;font-size:14px;font-weight:600;border:none;cursor:pointer;transition:all 0.2s;white-space:nowrap;font-family:'DM Sans',sans-serif;}
+.hero-btn:hover{background:var(--gold);transform:translateY(-2px);box-shadow:0 8px 28px rgba(184,137,42,0.25);}
+.hero-note{font-size:12px;color:var(--muted);animation:fadeUp 0.8s 0.4s ease both;opacity:0;letter-spacing:0.02em;}
+.hero-note span{color:var(--gold);font-weight:600;}
+.hero-cards{position:absolute;inset:0;pointer-events:none;}
+.hcard{position:absolute;background:white;border-radius:18px;padding:10px;box-shadow:0 20px 60px rgba(0,0,0,0.07);border:1px solid var(--border);animation:float 6s ease-in-out infinite;}
+.hcard:nth-child(1){top:18%;left:3%;width:118px;animation-delay:0s;}
+.hcard:nth-child(2){top:22%;right:3%;width:126px;animation-delay:2s;}
+.hcard:nth-child(3){bottom:22%;left:5%;width:112px;animation-delay:1s;}
+.hcard:nth-child(4){bottom:26%;right:4%;width:120px;animation-delay:3s;}
+.hcard-img{width:100%;aspect-ratio:3/4;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:32px;margin-bottom:8px;}
+.hcard-tag{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--gold);margin-bottom:2px;}
+.hcard-name{font-size:10px;color:var(--text);font-weight:500;}
+.hcard-earn{font-size:9px;color:#3d9c3d;font-weight:600;margin-top:2px;}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+
+/* STATS */
+.stats{background:var(--black);display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));}
+.stat{text-align:center;padding:34px 20px;border-right:1px solid rgba(255,255,255,0.07);}
+.stat:last-child{border-right:none;}
+.stat-num{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:700;color:var(--gold-bright);line-height:1;}
+.stat-label{font-size:11px;color:rgba(255,255,255,0.4);margin-top:5px;font-weight:300;letter-spacing:0.03em;}
+
+/* SECTIONS */
+.sec-wrap{padding:96px 48px;}
+.sec-wrap.alt{background:var(--cream);}
+.sec-wrap.alt2{background:var(--section-alt);}
+.sec-inner{max-width:1200px;margin:0 auto;}
+.sec-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--gold);margin-bottom:14px;}
+.sec-title{font-family:'Cormorant Garamond',serif;font-size:clamp(34px,5vw,54px);font-weight:300;line-height:1.1;letter-spacing:-1px;margin-bottom:16px;color:var(--dark);}
+.sec-title strong{font-weight:700;color:var(--black);}
+.sec-title em{font-style:italic;color:var(--gold);}
+.sec-sub{font-size:15px;color:var(--muted);max-width:460px;line-height:1.7;font-weight:300;}
+
+/* HOW IT WORKS */
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1px;margin-top:56px;background:var(--border);}
+.step{background:var(--white);padding:40px 28px;transition:background 0.2s;position:relative;overflow:hidden;}
+.step::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--gold);transform:scaleX(0);transition:transform 0.3s;transform-origin:left;}
+.step:hover{background:var(--cream);}
+.step:hover::after{transform:scaleX(1);}
+.step-num{font-family:'Cormorant Garamond',serif;font-size:56px;font-weight:700;color:var(--border2);line-height:1;margin-bottom:14px;}
+.step-icon{font-size:28px;margin-bottom:12px;}
+.step-title{font-size:16px;font-weight:600;margin-bottom:8px;color:var(--black);}
+.step-desc{font-size:13px;color:var(--text2);line-height:1.65;font-weight:300;}
+
+/* FEATURES */
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1px;margin-top:56px;background:var(--border);}
+.feat{background:var(--cream);padding:32px 28px;transition:background 0.2s;position:relative;overflow:hidden;}
+.feat::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),transparent);opacity:0;transition:opacity 0.3s;}
+.feat:hover{background:var(--cream2);}
+.feat:hover::before{opacity:1;}
+.feat-icon{width:48px;height:48px;border-radius:14px;background:var(--gold-light);border:1px solid var(--gold-border);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:18px;}
+.feat-title{font-size:16px;font-weight:600;margin-bottom:8px;color:var(--black);}
+.feat-desc{font-size:13px;color:var(--text2);line-height:1.65;font-weight:300;}
+
+/* THEMES */
+.themes-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:12px;margin-top:48px;}
+.theme-card{border-radius:18px;aspect-ratio:2/3;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:16px;position:relative;overflow:hidden;cursor:pointer;transition:transform 0.3s,box-shadow 0.3s;border:1px solid var(--border);}
+.theme-card:hover{transform:translateY(-4px);box-shadow:0 20px 50px rgba(0,0,0,0.12);}
+.theme-emoji{font-size:38px;position:absolute;top:50%;left:50%;transform:translate(-50%,-65%);filter:drop-shadow(0 4px 8px rgba(0,0,0,0.2));}
+.theme-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 25%,rgba(0,0,0,0.72) 100%);}
+.theme-label{position:relative;z-index:1;font-size:12px;font-weight:600;color:white;text-align:center;}
+.theme-count{position:relative;z-index:1;font-size:10px;color:rgba(255,255,255,0.55);margin-top:3px;}
+.theme-new{position:absolute;top:10px;right:10px;z-index:2;font-size:8px;background:var(--gold-bright);color:#000;padding:2px 7px;border-radius:20px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;}
+
+/* CREATOR TYPES */
+.creator-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:56px;}
+.ctype{background:white;border-radius:20px;padding:32px 28px;border:1px solid var(--border);transition:all 0.25s;position:relative;overflow:hidden;}
+.ctype::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;opacity:0;transition:opacity 0.3s;}
+.ctype:hover{transform:translateY(-3px);box-shadow:0 16px 48px rgba(0,0,0,0.07);}
+.ctype:hover::before{opacity:1;}
+.ctype.actor::before{background:linear-gradient(90deg,var(--gold-bright),transparent);}
+.ctype.designer::before{background:linear-gradient(90deg,#a078e8,transparent);}
+.ctype.creator::before{background:linear-gradient(90deg,#3aaa7a,transparent);}
+.ctype.everyday::before{background:linear-gradient(90deg,#e07aaa,transparent);}
+.ct-icon{font-size:36px;margin-bottom:14px;}
+.ct-badge{display:inline-block;font-size:9px;padding:3px 10px;border-radius:20px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:12px;}
+.badge-actor{background:rgba(201,168,76,0.1);color:var(--gold);border:1px solid var(--gold-border);}
+.badge-designer{background:rgba(160,120,232,0.1);color:#7a50d8;border:1px solid rgba(160,120,232,0.2);}
+.badge-creator{background:rgba(58,170,122,0.1);color:#2a8a5a;border:1px solid rgba(58,170,122,0.2);}
+.badge-everyday{background:rgba(224,122,170,0.1);color:#c04a8a;border:1px solid rgba(224,122,170,0.2);}
+.ct-title{font-size:17px;font-weight:600;color:var(--black);margin-bottom:8px;}
+.ct-desc{font-size:13px;color:var(--text2);line-height:1.65;font-weight:300;}
+
+/* EARNINGS */
+.earnings-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+.earn-card{background:white;border-radius:24px;padding:32px;border:1px solid var(--border);box-shadow:0 24px 80px rgba(0,0,0,0.06);}
+.earn-sm{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px;}
+.earn-amount{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:700;color:var(--gold);line-height:1;}
+.earn-change{font-size:12px;color:#3d9c3d;font-weight:600;margin-top:6px;}
+.earn-bars{margin-top:24px;display:flex;flex-direction:column;gap:10px;}
+.ebar{display:flex;align-items:center;gap:10px;font-size:12px;}
+.ebar-name{width:55px;color:var(--muted);}
+.ebar-wrap{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden;}
+.ebar-fill{height:100%;border-radius:3px;}
+.ebar-val{width:40px;text-align:right;color:var(--muted);font-size:11px;}
+.platforms{display:flex;gap:7px;margin-top:20px;flex-wrap:wrap;}
+.plat{font-size:11px;padding:4px 11px;border-radius:20px;border:1px solid var(--border);color:var(--muted);font-weight:500;background:var(--cream);}
+.check-list{display:flex;flex-direction:column;gap:18px;margin-top:32px;}
+.check-item{display:flex;gap:12px;align-items:flex-start;}
+.check-icon{width:28px;height:28px;border-radius:50%;background:var(--gold-light);border:1px solid var(--gold-border);display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:12px;flex-shrink:0;font-weight:700;}
+.check-title{font-size:14px;font-weight:600;margin-bottom:3px;color:var(--black);}
+.check-sub{font-size:13px;color:var(--text2);font-weight:300;}
+
+/* WAITLIST */
+.wl-inner{max-width:580px;margin:0 auto;text-align:center;}
+.type-options{display:flex;gap:8px;justify-content:center;margin-bottom:20px;flex-wrap:wrap;}
+.type-btn{padding:8px 16px;border-radius:100px;border:1.5px solid var(--border2);background:white;font-size:12px;font-weight:500;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;color:var(--muted);}
+.type-btn:hover,.type-btn.active{border-color:var(--gold);color:var(--gold);background:var(--gold-pale);}
+.wl-form{display:flex;flex-direction:column;gap:10px;margin-top:8px;}
+.wl-input{padding:14px 20px;border:1.5px solid var(--border2);border-radius:12px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.2s;background:white;color:var(--text);}
+.wl-input::placeholder{color:var(--muted);}
+.wl-input:focus{border-color:var(--gold);}
+.wl-btn{background:var(--black);color:white;padding:16px;border-radius:12px;font-size:15px;font-weight:700;border:none;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;}
+.wl-btn:hover{background:var(--gold);box-shadow:0 12px 40px rgba(184,137,42,0.2);}
+.proof{margin-top:28px;font-size:12px;color:var(--muted);}
+.avatars{display:flex;justify-content:center;margin-bottom:8px;}
+.av{width:30px;height:30px;border-radius:50%;border:2px solid white;margin-left:-7px;font-size:14px;display:flex;align-items:center;justify-content:center;background:var(--gold-pale);}
+.av:first-child{margin-left:0;}
+.success-msg{display:none;background:var(--gold-pale);border:1px solid var(--gold-border);border-radius:10px;padding:12px 18px;font-size:13px;color:var(--gold);font-weight:600;margin-top:12px;}
+
+/* FOOTER */
+footer{background:var(--black);padding:60px 48px 36px;}
+.footer-inner{max-width:1200px;margin:0 auto;}
+.footer-top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:40px;margin-bottom:48px;}
+.footer-logo{font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:700;color:white;}
+.footer-logo span{color:var(--gold-bright);}
+.footer-tagline{font-size:13px;color:rgba(255,255,255,0.35);margin-top:6px;font-weight:300;}
+.footer-socials{display:flex;gap:10px;margin-top:16px;}
+.footer-social{font-size:12px;color:rgba(255,255,255,0.4);text-decoration:none;padding:6px 14px;border:1px solid rgba(255,255,255,0.1);border-radius:100px;transition:all 0.2s;}
+.footer-social:hover{border-color:var(--gold-bright);color:var(--gold-bright);}
+.footer-links{display:flex;gap:48px;flex-wrap:wrap;}
+.footer-col h4{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:rgba(255,255,255,0.25);margin-bottom:16px;}
+.footer-col a{display:block;font-size:13px;color:rgba(255,255,255,0.35);text-decoration:none;margin-bottom:10px;transition:color 0.2s;font-weight:300;}
+.footer-col a:hover{color:var(--gold-bright);}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.07);padding-top:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:12px;color:rgba(255,255,255,0.25);}
+
+@media(max-width:768px){
+  nav{padding:14px 20px;}.nav-links{display:none;}
+  .sec-wrap{padding:60px 20px;}
+  .earnings-grid{grid-template-columns:1fr;gap:40px;}
+  .hcard{display:none;}
+  footer{padding:40px 20px;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo"><span>Fit</span><em>d</em></div>
+  <div class="nav-links">
+    <a href="#how">How It Works</a>
+    <a href="#features">Features</a>
+    <a href="#looks">Looks</a>
+    <a href="#earnings">Earnings</a>
+  </div>
+  <a href="#waitlist" class="nav-cta">Join Waitlist</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-cards">
+    <div class="hcard"><div class="hcard-img" style="background:linear-gradient(135deg,#f5e6d0,#e8d5b8)">✈️</div><div class="hcard-tag">Airport Look</div><div class="hcard-name">Priya's outfit</div><div class="hcard-earn">Earned ₹2,840</div></div>
+    <div class="hcard"><div class="hcard-img" style="background:linear-gradient(135deg,#d0f0e0,#b8e8c8)">🌊</div><div class="hcard-tag">Goa Trip</div><div class="hcard-name">Sneha's look</div><div class="hcard-earn">Earned ₹4,200</div></div>
+    <div class="hcard"><div class="hcard-img" style="background:linear-gradient(135deg,#f5d0e6,#e8b8d5)">🌙</div><div class="hcard-tag">Date Night</div><div class="hcard-name">Riya's style</div><div class="hcard-earn">Earned ₹1,560</div></div>
+    <div class="hcard"><div class="hcard-img" style="background:linear-gradient(135deg,#d0e8f5,#b8d5e8)">💪</div><div class="hcard-tag">Gym Look</div><div class="hcard-name">Kavya's fit</div><div class="hcard-earn">Earned ₹980</div></div>
+  </div>
+  <div style="position:relative;z-index:1">
+    <div class="hero-badge">🇮🇳 India's First Fashion Earning App — Coming Soon</div>
+    <h1 class="hero-title">Wear it.<br><strong>Tag it.</strong><br><em>Earn from it.</em></h1>
+    <p class="hero-sub">Share your daily outfits — airport looks, Goa trips, date nights, gym fits — and earn real money every time someone buys what you wear.</p>
+    <div class="hero-form">
+      <input class="hero-input" type="email" placeholder="Enter your email address" id="hero-email">
+      <button class="hero-btn" onclick="joinWaitlist('hero')">Get Early Access</button>
+    </div>
+    <div class="success-msg" id="hero-success" style="max-width:400px;margin:12px auto 0">🎉 You're on the list! We'll notify you at launch.</div>
+    <p class="hero-note">Already <span>2,400+ creators</span> on the waitlist · Free to join · No minimum followers</p>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat"><div class="stat-num">₹0</div><div class="stat-label">Cost to join</div></div>
+  <div class="stat"><div class="stat-num">70%</div><div class="stat-label">Commission to you</div></div>
+  <div class="stat"><div class="stat-num">1,000+</div><div class="stat-label">Brands & products</div></div>
+  <div class="stat"><div class="stat-num">1 tap</div><div class="stat-label">Affiliate link generation</div></div>
+  <div class="stat"><div class="stat-num">6+</div><div class="stat-label">Shopping platforms</div></div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="sec-wrap" id="how">
+  <div class="sec-inner">
+    <div class="sec-label">How It Works</div>
+    <h2 class="sec-title">Three steps to<br><strong>start earning</strong></h2>
+    <p class="sec-sub">No minimum followers. No complicated setup. Just post your outfit and start earning from every sale.</p>
+    <div class="steps">
+      <div class="step"><div class="step-num">01</div><div class="step-icon">📸</div><div class="step-title">Post Your Outfit</div><div class="step-desc">Upload a photo or short video of your look. Morning OOTD, airport fit, Goa trip, gym session, date night — any outfit on any day counts.</div></div>
+      <div class="step"><div class="step-num">02</div><div class="step-icon">🏷️</div><div class="step-title">Tag Every Item</div><div class="step-desc">Paste any Myntra, Amazon, Ajio or Flipkart product link. Fitd auto-generates your personal affiliate link in one tap — no dashboard, no complexity.</div></div>
+      <div class="step"><div class="step-num">03</div><div class="step-icon">💰</div><div class="step-title">Earn Real Money</div><div class="step-desc">Every time a follower buys through your link, you earn up to 10% commission. Paid directly to your UPI or bank account every month.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<div class="sec-wrap alt" id="features">
+  <div class="sec-inner">
+    <div class="sec-label">Platform Features</div>
+    <h2 class="sec-title">Everything you need to<br><strong>look good</strong> <em>and earn</em></h2>
+    <div class="features-grid">
+      <div class="feat"><div class="feat-icon">🎬</div><div class="feat-title">FitReels</div><div class="feat-desc">Short outfit videos with licensed music. Tap any tagged item directly on the video to shop it. The most engaging way to show your look and earn.</div></div>
+      <div class="feat"><div class="feat-icon">🛍️</div><div class="feat-title">Get the Look</div><div class="feat-desc">Swipe up on any post to see every tagged item with price and buy button. One tap to shop the complete outfit from Myntra, Amazon, or Ajio.</div></div>
+      <div class="feat"><div class="feat-icon">🔗</div><div class="feat-title">Auto Affiliate Links</div><div class="feat-desc">Paste any product URL — Fitd wraps it into a personal tracked affiliate link automatically. No separate affiliate account needed.</div></div>
+      <div class="feat"><div class="feat-icon">🌍</div><div class="feat-title">Trip Capsule</div><div class="feat-desc">Going to Goa? Haridwar? Manali? Organise your entire trip's outfits into a beautiful themed capsule — all shoppable, all linked.</div></div>
+      <div class="feat"><div class="feat-icon">📊</div><div class="feat-title">Earnings Dashboard</div><div class="feat-desc">See exactly how many clicks, sales and commissions each post generates in real time. Know which outfits earn the most.</div></div>
+      <div class="feat"><div class="feat-icon">⭐</div><div class="feat-title">Creator Badges</div><div class="feat-desc">Actor, Designer, Micro Creator, Founding Creator — tiered verified badges that unlock better commission rates and brand deals.</div></div>
+      <div class="feat"><div class="feat-icon">🤝</div><div class="feat-title">Brand Collaborations</div><div class="feat-desc">Brands reach out directly on Fitd for sponsored posts, new collection launches and paid campaigns. Your profile is your business card.</div></div>
+      <div class="feat"><div class="feat-icon">🎵</div><div class="feat-title">Licensed Music</div><div class="feat-desc">50,000+ licensed tracks to add to your FitReels. No copyright strikes, no muted videos. The perfect soundtrack for every outfit.</div></div>
+      <div class="feat"><div class="feat-icon">🔍</div><div class="feat-title">Discover by Theme</div><div class="feat-desc">Browse outfit inspiration by category — airport looks, gym fits, wedding guest, festival wear, date night — all curated and shoppable.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- LOOKS -->
+<div class="sec-wrap" id="looks">
+  <div class="sec-inner">
+    <div class="sec-label">Outfit Categories</div>
+    <h2 class="sec-title">Every look.<br><em>Every moment.</em></h2>
+    <p class="sec-sub">From your morning coffee run to your Goa trip — every outfit you wear is an opportunity to earn on Fitd.</p>
+    <div class="themes-grid">
+      <div class="theme-card" style="background:linear-gradient(160deg,#1a1020,#0a1428)"><div class="theme-emoji">✈️</div><div class="theme-overlay"></div><div class="theme-label">Airport Look</div><div class="theme-count">2.4k outfits</div></div>
+      <div class="theme-card" style="background:linear-gradient(160deg,#0a2018,#1a2800)"><div class="theme-emoji">🌊</div><div class="theme-overlay"></div><div class="theme-label">Goa / Beach</div><div class="theme-count">1.8k outfits</div></div>
+      <div class="theme-card" style="background:linear-gradient(160deg,#280818,#1a0828)"><div class="theme-emoji">🌙</div><div class="theme-overlay"></div><div class="theme-label">Date Night</div><div class="theme-count">3.1k outfits</div></div>
+      <div class="theme-card" style="background:linear-gradient(160deg,#1a1508,#281800)"><div class="theme-emoji">🕌</div><div class="theme-overlay"></div><div class="theme-label">Spiritual Travel</div><div class="theme-count">940 outfits</div></div>
+      <div class="theme-card" style="background:linear-gradient(160deg,#200a10,#100020)"><div class="theme-emoji">💒</div><div class="theme-overlay"></div><div class="theme-label">Wedding Guest</div><div class="theme-count">4.2k outfits</div></div>
+      <div class="theme-card" style="background:linear-gradient(160deg,#0a1820,#201008)"><div class="theme-new">New</div><div class="theme-emoji">💪</div><div class="theme-overlay"></div><div class="theme-label">Gym & Fitness</div><div class="theme-count">1.1k outfits</div></div>
+      <div class="theme-card" style="background:linear-gradient(160deg,#201808,#082018)"><div class="theme-new">New</div><div class="theme-emoji">🎉</div><div class="theme-overlay"></div><div class="theme-label">Festival Look</div><div class="theme-count">2.8k outfits</div></div>
+      <div class="theme-card" style="background:linear-gradient(160deg,#1a0820,#201800)"><div class="theme-emoji">🌸</div><div class="theme-overlay"></div><div class="theme-label">Daily OOTD</div><div class="theme-count">8.6k outfits</div></div>
+      <div class="theme-card" style="background:linear-gradient(160deg,#0a1020,#200a10)"><div class="theme-emoji">🏔️</div><div class="theme-overlay"></div><div class="theme-label">Trek & Adventure</div><div class="theme-count">620 outfits</div></div>
+      <div class="theme-card" style="background:linear-gradient(160deg,#200818,#081820)"><div class="theme-new">New</div><div class="theme-emoji">🎓</div><div class="theme-overlay"></div><div class="theme-label">College Look</div><div class="theme-count">1.4k outfits</div></div>
+      <div class="theme-card" style="background:linear-gradient(160deg,#182008,#200818)"><div class="theme-emoji">☕</div><div class="theme-overlay"></div><div class="theme-label">Cafe Date</div><div class="theme-count">1.2k outfits</div></div>
+      <div class="theme-card" style="background:linear-gradient(160deg,#082018,#180820)"><div class="theme-new">New</div><div class="theme-emoji">🏢</div><div class="theme-overlay"></div><div class="theme-label">Office / Work</div><div class="theme-count">890 outfits</div></div>
+      <div class="theme-card" style="background:linear-gradient(160deg,#201008,#082020)"><div class="theme-new">New</div><div class="theme-emoji">🎪</div><div class="theme-overlay"></div><div class="theme-label">Sangeet Night</div><div class="theme-count">760 outfits</div></div>
+      <div class="theme-card" style="background:linear-gradient(160deg,#100820,#201000)"><div class="theme-new">New</div><div class="theme-emoji">🌃</div><div class="theme-overlay"></div><div class="theme-label">Rooftop Party</div><div class="theme-count">540 outfits</div></div>
+      <div class="theme-card" style="background:linear-gradient(160deg,#0a2010,#200a20)"><div class="theme-new">New</div><div class="theme-emoji">🏠</div><div class="theme-overlay"></div><div class="theme-label">Cozy Home Fit</div><div class="theme-count">430 outfits</div></div>
+      <div class="theme-card" style="background:linear-gradient(160deg,#201818,#082010)"><div class="theme-new">New</div><div class="theme-emoji">🛍️</div><div class="theme-overlay"></div><div class="theme-label">Mall Day Look</div><div class="theme-count">680 outfits</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- CREATOR TYPES -->
+<div class="sec-wrap alt2" id="creators">
+  <div class="sec-inner">
+    <div class="sec-label">Who Is Fitd For</div>
+    <h2 class="sec-title"><strong>Anyone</strong> with a style<br>can <em>earn on Fitd</em></h2>
+    <div class="creator-grid">
+      <div class="ctype actor"><div class="ct-icon">🌟</div><div class="ct-badge badge-actor">Bollywood Actor</div><div class="ct-title">Actors & Celebrities</div><div class="ct-desc">Share your event looks, casual OOTDs and red carpet outfits. Your fans already want to dress like you — now they can shop it directly from your Fitd profile.</div></div>
+      <div class="ctype designer"><div class="ct-icon">✂️</div><div class="ct-badge badge-designer">Fashion Designer</div><div class="ct-title">Fashion Designers</div><div class="ct-desc">Launch new collections directly on Fitd. Post reels of your designs, tag your store link, and reach millions of fashion-conscious buyers across India.</div></div>
+      <div class="ctype creator"><div class="ct-icon">📱</div><div class="ct-badge badge-creator">Micro Creator</div><div class="ct-title">Influencers & Creators</div><div class="ct-desc">1,000 followers or 1 million — everyone earns equally on Fitd. Your commission depends on what you sell, not how many followers you have.</div></div>
+      <div class="ctype everyday"><div class="ct-icon">👗</div><div class="ct-badge badge-everyday">Fashion Lover</div><div class="ct-title">Everyday Fashion Lovers</div><div class="ct-desc">No followers needed to start. Post your daily outfit, tag the items, and earn when your friends buy. Open to everyone — from any city in India.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- EARNINGS -->
+<div class="sec-wrap" id="earnings">
+  <div class="sec-inner">
+    <div class="earnings-grid">
+      <div>
+        <div class="sec-label">Creator Earnings</div>
+        <h2 class="sec-title">Real money from<br><strong>real outfits</strong></h2>
+        <p class="sec-sub">You earn 70% of every commission. Fitd keeps 30%. Paid directly to your UPI or bank account — no minimum payout threshold.</p>
+        <div class="check-list">
+          <div class="check-item"><div class="check-icon">✓</div><div><div class="check-title">Myntra — up to 7.5% commission</div><div class="check-sub">On every fashion sale generated through your tagged link</div></div></div>
+          <div class="check-item"><div class="check-icon">✓</div><div><div class="check-title">Amazon — up to 9% commission</div><div class="check-sub">Fashion, accessories, footwear, activewear and more</div></div></div>
+          <div class="check-item"><div class="check-icon">✓</div><div><div class="check-title">Ajio — up to 10% commission</div><div class="check-sub">One of the highest fashion commissions available in India</div></div></div>
+          <div class="check-item"><div class="check-icon">✓</div><div><div class="check-title">Flipkart, Nykaa Fashion, Meesho</div><div class="check-sub">All major Indian fashion platforms supported from day one</div></div></div>
+        </div>
+      </div>
+      <div class="earn-card">
+        <div class="earn-sm">Creator Earnings — This Month</div>
+        <div class="earn-amount">₹18,420</div>
+        <div class="earn-change">↑ 34% vs last month · 142 sales generated</div>
+        <div class="earn-bars">
+          <div class="ebar"><div class="ebar-name">Myntra</div><div class="ebar-wrap"><div class="ebar-fill" style="width:72%;background:var(--gold-bright)"></div></div><div class="ebar-val">₹8.2k</div></div>
+          <div class="ebar"><div class="ebar-name">Amazon</div><div class="ebar-wrap"><div class="ebar-fill" style="width:48%;background:#FF9900"></div></div><div class="ebar-val">₹6.1k</div></div>
+          <div class="ebar"><div class="ebar-name">Ajio</div><div class="ebar-wrap"><div class="ebar-fill" style="width:28%;background:#E53935"></div></div><div class="ebar-val">₹4.1k</div></div>
+        </div>
+        <div class="platforms"><span class="plat">Myntra</span><span class="plat">Amazon</span><span class="plat">Ajio</span><span class="plat">Flipkart</span><span class="plat">Nykaa</span><span class="plat">Meesho</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WAITLIST -->
+<div class="sec-wrap alt" id="waitlist">
+  <div class="wl-inner">
+    <div class="sec-label" style="text-align:center">Early Access</div>
+    <h2 class="sec-title" style="text-align:center">Be the first<br>on <strong>Fitd</strong></h2>
+    <p class="sec-sub" style="margin:0 auto 28px;text-align:center;max-width:440px">Join the waitlist and get Founding Creator status — permanent badge, 80% commission rate, and priority access at launch.</p>
+    <div class="type-options">
+      <button class="type-btn active" onclick="selectType(this)">👗 Fashion Creator</button>
+      <button class="type-btn" onclick="selectType(this)">🌟 Actor / Celebrity</button>
+      <button class="type-btn" onclick="selectType(this)">✂️ Fashion Designer</button>
+      <button class="type-btn" onclick="selectType(this)">🛍️ Fashion Lover</button>
+    </div>
+    <div class="wl-form">
+      <input class="wl-input" type="text" placeholder="Your full name" id="wl-name">
+      <input class="wl-input" type="email" placeholder="Your email address" id="wl-email">
+      <input class="wl-input" type="tel" placeholder="WhatsApp number (optional — for launch notification)">
+      <button class="wl-btn" onclick="joinWaitlist('waitlist')">🚀 Join Fitd Waitlist — It's Free</button>
+    </div>
+    <div class="success-msg" id="waitlist-success">🎉 Welcome to Fitd! You're officially a Founding Creator. We'll message you at launch!</div>
+    <div class="proof">
+      <div class="avatars"><div class="av">👩🏽</div><div class="av">👩🏻</div><div class="av">👩🏾</div><div class="av">👨🏽</div><div class="av">👩🏼</div></div>
+      <span><strong style="color:var(--text)">2,400+ creators</strong> already on the waitlist across India</span>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo"><span>Fit</span>d</div>
+        <div class="footer-tagline">Wear it. Tag it. Earn from it.</div>
+        <div class="footer-socials">
+          <a href="https://instagram.com/fitd" class="footer-social">Instagram</a>
+          <a href="#" class="footer-social">YouTube</a>
+          <a href="#" class="footer-social">Twitter / X</a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col"><h4>Product</h4><a href="#how">How It Works</a><a href="#features">Features</a><a href="#looks">Looks</a><a href="#earnings">Earnings</a></div>
+        <div class="footer-col"><h4>Creators</h4><a href="#waitlist">Fashion Creators</a><a href="#waitlist">Bollywood Actors</a><a href="#waitlist">Fashion Designers</a><a href="#waitlist">Brand Partnerships</a></div>
+        <div class="footer-col"><h4>Company</h4><a href="#waitlist">About Fitd</a><a href="mailto:hello@fitd.in">Contact Us</a><a href="mailto:hello@fitd.in">hello@fitd.in</a></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Fitd. Made with ❤️ in India 🇮🇳</span>
+      <span>Privacy Policy · Terms of Service</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+function joinWaitlist(src){
+  const email=src==='hero'?document.getElementById('hero-email').value:document.getElementById('wl-email').value;
+  const sid=src==='hero'?'hero-success':'waitlist-success';
+  if(!email||!email.includes('@')){alert('Please enter a valid email address!');return;}
+  document.getElementById(sid).style.display='block';
+  if(src==='hero')document.getElementById('hero-email').value='';
+  if(src==='waitlist'){document.getElementById('wl-name').value='';document.getElementById('wl-email').value='';}
+}
+function selectType(el){
+  document.querySelectorAll('.type-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+}
+window.addEventListener('scroll',()=>{
+  document.querySelector('nav').style.boxShadow=window.scrollY>20?'0 4px 24px rgba(0,0,0,0.06)':'none';
+});
+</script>
+</body>
+</html>
